@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Trabalho</title>
+</head>
+
+<style>
+    a {
+            -webkit-appearance: button;
+            -moz-appearance: button;
+            appearance: button;
+    
+            text-decoration: none;
+            color: initial;
+        }
+    
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        h1{
+            padding: 20px;
+            text-align: center;
+        }
+
+        #resultDiv{
+            padding-top: 15px;
+        }
+
+    </style>
+
+<body>
+    <div class="container">
+        <h1>UC Davies MIBS</h1>
+        <div class="form-group">
+            <label for="exampleIp">IP (default localhost)</label>
+            <input type="number" class="form-control" id="ip" placeholder="localhost">
+        </div>
+        <div class="form-group">
+            <label for="exampleOidStatic">OIDs</label>
+            <select name="oidStatic" class="form-control" id="oidStaticSelect">
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.10.1.3.1">1.3.6.1.4.1.2021.10.1.3.1</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.10.1.3.2">1.3.6.1.4.1.2021.10.1.3.2</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.10.1.3.3">1.3.6.1.4.1.2021.10.1.3.3</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.11.9.0">1.3.6.1.4.1.2021.11.9.0</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.11.50.0">1.3.6.1.4.1.2021.11.50.0</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.11.10.0">1.3.6.1.4.1.2021.11.10.0</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.11.52.0">1.3.6.1.4.1.2021.11.52.0</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.11.11.0">1.3.6.1.4.1.2021.11.11.0</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.11.53.0">1.3.6.1.4.1.2021.11.53.0</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.11.51.0">1.3.6.1.4.1.2021.11.51.0</option>
+                <option value="snmpwalk localhost 1.3.6.1.4.1.2021.4.3.0">1.3.6.1.4.1.2021.4.3.0</option>
+            </select>
+        </div>
+        <button onclick="teste()" type="button" class="btn btn-primary">Processar</button>
+        <div id="resultDiv" class="form-group">
+            <label for="exampleFormControlTextarea1">Resultado</label>
+            <textarea id="consoleResult" name="consoleResult" class="form-control" id="exampleFormControlTextarea1"
+                rows="20"></textarea>
+        </div>
+        <a class="btn btn-md btn-primary" href="/">Voltar</a>
+    </div>
+</body>
+<script>
+    //Pega as informações dos campos e ajusta elas de acordo com o OIDs e o IP que foi escolhido e envia para o app.post('/processUc')
+    function teste() {
+        var ip = "localhost";
+        var oid = $("#oidStaticSelect").val();
+        if ($("#ip").val()) {
+            ip = $("#ip").val();
+            oid = oid.replace("localhost", ip);
+        }
+        $.ajax({
+            url: "/processUc",
+            method: "POST",
+            data: {
+                oid: oid
+            },
+            success: function (data) {
+                $("#consoleResult").val(data);
+            }
+        })
+    }
+</script>
+
+</html>
