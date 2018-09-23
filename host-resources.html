@@ -21,9 +21,11 @@
         -webkit-appearance: button;
         -moz-appearance: button;
         appearance: button;
-
         text-decoration: none;
         color: initial;
+    }
+    .btn-callback{
+        margin-bottom: 22px;
     }
 
     body {
@@ -37,8 +39,8 @@
     }
 
     #resultDiv{
-            padding-top: 15px;
-        }
+        padding-top: 15px;
+    }
 </style>
 
 <body>
@@ -61,17 +63,17 @@
                 <option value="snmpwalk localhost hrSWInstalledTable">hrSWInstalledTable</option>
             </select>
         </div>
-        <button onclick="teste()" type="button" class="btn btn-primary">Processar</button>
+        <button onclick="getInformation()" type="button" class="btn btn-primary">Processar</button>
         <div id="resultDiv" class="form-group">
             <label for="exampleFormControlTextarea1">Resultado</label>
             <textarea id="consoleResult" name="consoleResult" class="form-control" rows="20"></textarea>
         </div>
-        <a class="btn btn-md btn-primary" href="/">Voltar</a>
+        <a class="btn btn-md btn-primary btn-callback" href="/">Voltar</a>
     </div>
 </body>
 <script>
     //Pega as informações dos campos e ajusta elas de acordo com o OIDs e o IP que foi escolhido e envia para o app.post('/processUc')
-    function teste() {
+    function getInformation() {
         var ip = "localhost";
         var oid = $("#oidStaticSelect").val();
         if ($("#ip").val()) {
